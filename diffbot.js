@@ -16,7 +16,7 @@ exports.get_frontpage = function(url){
             });
         res.on('end', function(){   
         
-                console.log(result);
+                console.log(body);
     });
     
 };
