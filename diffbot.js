@@ -1,12 +1,11 @@
 var http = require('http');
-var xml  = require('xml2js');
 
-exports.api_key = "f8928098bf065770f74592851be7b24a";
+exports.api_key = "";
 exports.get_frontpage = function(url){
     var options = {
             host:'www.diffbot.com', 
             port: 80, 
-            path:'/api/frontpage?token='+exports.api_key+'&url='+encodeURI(url)
+            path:'/api/frontpage?format=json&token='+exports.api_key+'&url='+encodeURI(url)
         };
         
     var body = '';
@@ -17,13 +16,7 @@ exports.get_frontpage = function(url){
             });
         res.on('end', function(){   
         
-            var parser = new xml.Parser();
-            parser.addListener('end', function(result) {
                 console.log(result);
-            });
-            parser.parseString(body);
-            
-            });
     });
     
 };
@@ -32,7 +25,7 @@ exports.get_article = function(url){
     var options = {
             host:'www.diffbot.com', 
             port: 80, 
-            path:'/api/article?token='+exports.api_key+'&url='+encodeURI(url)
+            path:'/api/article?format=json&token='+exports.api_key+'&url='+encodeURI(url)
         };
         
     var body = '';
@@ -42,15 +35,8 @@ exports.get_article = function(url){
             body += d;
             });
         res.on('end', function(){
-            console.log(body.items);
+            console.log(body);
    
-            var parser = new xml.Parser();
-            parser.addListener('end', function(result) {
-                console.log(result);
-                console.log('Done.');
-            });
-            parser.parseString(body);
-            
             });
     });
 
