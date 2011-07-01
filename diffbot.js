@@ -1,7 +1,8 @@
 var http = require('http');
 
 exports.api_key = "";
-exports.get_frontpage = function(url){
+exports.get_frontpage = function(url, callback){
+
     var options = {
             host:'www.diffbot.com', 
             port: 80, 
@@ -15,13 +16,31 @@ exports.get_frontpage = function(url){
             body += d;
             });
         res.on('end', function(){   
-        
-                console.log(body);
+                callback( JSON.parse(body) );
+                body = '';
+    	});
     });
-    
+
 };
 
-exports.get_article = function(url){
+
+// JSON format of response is:
+// {
+//  icon: string_url
+//  author: string
+//  text: string
+//  title: string
+//  date: string_human_friendly_format
+//  url: string_url
+//  xpath: string
+//  media: [
+//      { 
+//        link: string_url
+//        type: string (image)
+//         primary: string_boolean
+//    ]
+// }
+exports.get_article = function(url, callback){
     var options = {
             host:'www.diffbot.com', 
             port: 80, 
@@ -35,9 +54,8 @@ exports.get_article = function(url){
             body += d;
             });
         res.on('end', function(){
-            console.log(body);
-   
+            callback(JSON.parse(body));
+            body = '';
             });
-    });
-
+	});
 };
